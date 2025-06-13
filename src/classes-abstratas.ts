@@ -11,12 +11,12 @@ export abstract class FormaGeometrica {
         return `A cor da forma é: ${this.cor}`;
     }
 
-    static descreverArea(forma: FormaGeometrica): string {
-        if (forma instanceof FormaGeometrica) {
-            return `Esta forma tem uma área de ${forma.calcularArea()} unidades quadradas.`;
-        }
-        return 'Forma geométrica inválida.';
+    static descreverArea(forma: any): string {
+    if (forma && typeof forma.calcularArea === 'function') {
+        return `Esta forma tem uma área de ${forma.calcularArea()} unidades quadradas.`;
     }
+    return 'Forma geométrica inválida.';
+}
 }
 
 export class Circulo extends FormaGeometrica {

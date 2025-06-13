@@ -2,7 +2,6 @@ import { FormaGeometrica, Circulo, Retangulo } from './classes-abstratas';
 
 describe('Classes Abstratas e Subclasses (FormaGeometrica)', () => {
 
-    // Teste para a subclasse Círculo
     describe('Subclasse Círculo', () => {
         let meuCirculo: Circulo;
 
@@ -31,9 +30,14 @@ describe('Classes Abstratas e Subclasses (FormaGeometrica)', () => {
         test('deve exibir a cor do Círculo', () => {
             expect(meuCirculo.exibirCor()).toBe('A cor da forma é: Vermelho');
         });
+
+        test('deve exibir o diâmetro do Círculo corretamente', () => {
+            expect(meuCirculo.exibirDiametro()).toBe(10);
+            meuCirculo.raio = 3;
+            expect(meuCirculo.exibirDiametro()).toBe(6);
+        });
     });
 
-    // Teste para a subclasse Retângulo
     describe('Subclasse Retângulo', () => {
         let meuRetangulo: Retangulo;
 
@@ -66,9 +70,15 @@ describe('Classes Abstratas e Subclasses (FormaGeometrica)', () => {
         test('deve exibir a cor do Retângulo', () => {
             expect(meuRetangulo.exibirCor()).toBe('A cor da forma é: Verde');
         });
+
+        test('deve exibir o perímetro do Retângulo corretamente', () => {
+            expect(meuRetangulo.exibirPerimetro()).toBe(20);
+            meuRetangulo.largura = 3;
+            meuRetangulo.altura = 7;
+            expect(meuRetangulo.exibirPerimetro()).toBe(20);
+        });
     });
 
-    // Teste para o método estático da classe abstrata
     describe('Método Estático de FormaGeometrica', () => {
         test('deve descrever a área de um Círculo', () => {
             const circulo = new Circulo('Roxo', 3);
@@ -82,13 +92,17 @@ describe('Classes Abstratas e Subclasses (FormaGeometrica)', () => {
             expect(FormaGeometrica.descreverArea(retangulo)).toBe(expectedDescription);
         });
 
-        // Teste para garantir que o método estático funciona com diferentes instâncias
         test('deve funcionar com diferentes instâncias de subclasses', () => {
             const circuloPequeno = new Circulo('Branco', 1);
             const retanguloGrande = new Retangulo('Preto', 10, 10);
 
             expect(FormaGeometrica.descreverArea(circuloPequeno)).toBe(`Esta forma tem uma área de ${Math.PI * 1} unidades quadradas.`);
             expect(FormaGeometrica.descreverArea(retanguloGrande)).toBe(`Esta forma tem uma área de ${100} unidades quadradas.`);
+        });
+
+        test('deve retornar erro para objeto inválido', () => {
+            const objetoInvalido = { cor: 'SemForma' };
+            expect(FormaGeometrica.descreverArea(objetoInvalido)).toBe('Forma geométrica inválida.');
         });
     });
 });
